@@ -108,6 +108,147 @@
       .channel-logo img[alt="街口支付"] { height: 98%; }
       .channel-logo img[alt="LINE Pay"] { height: 83%; }
       .channel-logo img[alt="永豐銀行"] { height: 73%; }
+
+      /* 捐款管道 A 版：先分定期定額／單筆，兩欄並列 */
+      .give-split {
+        width: min(var(--max), 100%);
+        margin: 48px auto 0;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+        align-items: start;
+      }
+      .give-type {
+        --accent: var(--path);
+        position: relative;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-top: 6px solid var(--accent);
+        border-radius: var(--card-radius);
+        padding: 26px 24px 24px;
+        box-shadow: 0 3px 10px rgba(61, 85, 39, 0.05);
+      }
+      .give-type--recurring {
+        --accent: var(--brand-green);
+        background: rgba(142, 196, 87, 0.08);
+      }
+      .give-type__tag {
+        display: inline-block;
+        padding: 3px 12px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+      }
+      .give-type--single .give-type__tag { background: var(--sunset); }
+      .give-type__head h3 {
+        margin: 10px 0 4px;
+        font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+        color: var(--deep);
+        line-height: 1.35;
+      }
+      .give-type__head p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+      .give-rows {
+        list-style: none;
+        margin: 20px 0 0;
+        padding: 0;
+        display: grid;
+        gap: 10px;
+      }
+      .give-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas: "logo go" "desc go";
+        align-items: center;
+        gap: 6px 14px;
+        padding: 12px 16px;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        color: inherit;
+        text-decoration: none;
+        transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+      }
+      .give-row:hover,
+      .give-row:focus-visible {
+        border-color: var(--accent);
+        box-shadow: 0 8px 20px rgba(61, 85, 39, 0.12);
+        transform: translateY(-1px);
+      }
+      .give-row__logo {
+        grid-area: logo;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: 36px;
+      }
+      .give-row__logo img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+      }
+      .give-row__logo img[alt="netiCRM"] { border-radius: 6px; }
+      .give-row__logo img[alt="永豐銀行"] { max-height: 76%; }
+      .give-row__logo img[alt="LINE Pay"] { max-height: 82%; }
+      .give-row__desc {
+        grid-area: desc;
+        display: flex;
+        flex-direction: column;
+        color: var(--deep);
+        font-weight: 600;
+        line-height: 1.45;
+      }
+      .give-row__desc small {
+        color: var(--muted);
+        font-weight: 400;
+        font-size: 0.8rem;
+      }
+      .give-row__go {
+        grid-area: go;
+        padding: 7px 14px;
+        border: 1px solid var(--accent);
+        border-radius: 999px;
+        color: var(--deep);
+        font-size: 0.86rem;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .give-type__note {
+        margin: 16px 0 0;
+        padding: 12px 14px;
+        border-radius: 12px;
+        background: var(--honey);
+        color: var(--deep);
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+      @media (max-width: 960px) {
+        .give-split { grid-template-columns: 1fr; gap: 18px; margin-top: 40px; }
+        .give-row {
+          grid-template-columns: 120px minmax(0, 1fr) auto;
+          grid-template-areas: "logo desc go";
+          gap: 16px;
+        }
+        .give-row__logo { justify-content: center; height: 40px; }
+      }
+      @media (max-width: 520px) {
+        .give-type { padding: 22px 16px 18px; }
+        .give-row {
+          grid-template-columns: minmax(0, 1fr) auto;
+          grid-template-areas: "logo go" "desc desc";
+          gap: 8px 12px;
+        }
+        .give-row__logo { justify-content: flex-start; height: 34px; }
+      }
 </style>
   </head>
   <body class="rspine audience-spine-page spine-gentle grp-involve" data-spine-route="mid" data-spine-label="SUPPORT US" style="--spine-c: #f8cd5f;">
@@ -336,31 +477,68 @@
               </p>
             </div>
           </div>
-          <div class="channel-grid">
-
-            <a class="channel-card" href="https://donate.countryedu.org.tw/civicrm/contribute/transact?reset=1&amp;id=3" target="_blank" rel="noopener">
-              <span class="channel-logo"><img src="assets/donate/neticrm.png" alt="netiCRM" width="380" height="161" /></span>
-
-              <span class="channel-desc">線上捐款</span>
-              <span class="channel-status">前往捐款 →</span>
-            </a>
-            <a class="channel-card" href="https://web-tw-pay.line.me/cms/donation/a7e6228959a748a8bab71dd1ea256554" target="_blank" rel="noopener">
-              <span class="channel-logo"><img src="assets/donate/linepay.webp" alt="LINE Pay" width="960" height="280" /></span>
-              <span class="channel-desc">愛心捐款</span>
-              <span class="channel-status">前往捐款 →</span>
-            </a>
-            <a class="channel-card" href="https://mkt.jkopay.com/zh-TW/event/jkopay-donation" target="_blank" rel="noopener">
-              <span class="channel-logo"><img src="assets/donate/jkopay.png" alt="街口支付" width="701" height="285" /></span>
-              <span class="channel-desc">捐款專區</span>
-
-              <span class="channel-subnote">需以街口 APP 完成捐款</span>
-              <span class="channel-status">前往捐款 →</span>
-            </a>
-            <a class="channel-card" href="https://donation.sinopac.com/OnlineSinoPac/project_donate.aspx?OrgID=O099&amp;id=807" target="_blank" rel="noopener">
-              <span class="channel-logo"><img src="assets/donate/sinopac.png" alt="永豐銀行" width="800" height="178" /></span>
-              <span class="channel-desc">公益捐款平台</span>
-              <span class="channel-status">前往捐款 →</span>
-            </a>
+          <div class="give-split">
+            <div class="give-type give-type--recurring" role="group" aria-labelledby="give-type-recurring">
+              <div class="give-type__head">
+                <span class="give-type__tag">每月自動扣款</span>
+                <h3 id="give-type-recurring">定期定額捐款</h3>
+                <p>設定一次，每月自動扣款，穩定支持鄉育長期運作。</p>
+              </div>
+              <ul class="give-rows">
+                <li>
+                  <a class="give-row" href="https://mkt.jkopay.com/zh-TW/event/jkopay-donation" target="_blank" rel="noopener">
+                    <span class="give-row__logo"><img src="assets/donate/jkopay.png" alt="街口支付" width="701" height="285" /></span>
+                    <span class="give-row__desc">捐款專區<small>需以街口 APP 完成捐款</small></span>
+                    <span class="give-row__go">前往捐款 →</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="give-row" href="https://countryedu.oen.tw/project/page/3Jz9W4GVncXrnNZFzfMUjTCV5Sf" target="_blank" rel="noopener">
+                    <span class="give-row__logo"><img src="assets/donate/oen.svg" alt="Oen 應援" width="74" height="54" /></span>
+                    <span class="give-row__desc">應援平台</span>
+                    <span class="give-row__go">前往捐款 →</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="give-row" href="https://donate.countryedu.org.tw/civicrm/contribute/transact?reset=1&amp;id=3" target="_blank" rel="noopener">
+                    <span class="give-row__logo"><img src="assets/donate/neticrm.png" alt="netiCRM" width="380" height="161" /></span>
+                    <span class="give-row__desc">線上捐款</span>
+                    <span class="give-row__go">前往捐款 →</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="give-type give-type--single" role="group" aria-labelledby="give-type-single">
+              <div class="give-type__head">
+                <span class="give-type__tag">一次性支持</span>
+                <h3 id="give-type-single">單筆捐款</h3>
+                <p>單次捐款，金額由你決定。</p>
+              </div>
+              <ul class="give-rows">
+                <li>
+                  <a class="give-row" href="https://donation.sinopac.com/OnlineSinoPac/project_donate.aspx?OrgID=O099&amp;id=807" target="_blank" rel="noopener">
+                    <span class="give-row__logo"><img src="assets/donate/sinopac.png" alt="永豐銀行" width="800" height="178" /></span>
+                    <span class="give-row__desc">公益捐款平台</span>
+                    <span class="give-row__go">前往捐款 →</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="give-row" href="https://web-tw-pay.line.me/cms/donation/a7e6228959a748a8bab71dd1ea256554" target="_blank" rel="noopener">
+                    <span class="give-row__logo"><img src="assets/donate/linepay.webp" alt="LINE Pay" width="960" height="280" /></span>
+                    <span class="give-row__desc">愛心捐款</span>
+                    <span class="give-row__go">前往捐款 →</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="give-row" href="https://mkt.jkopay.com/zh-TW/event/jkopay-donation" target="_blank" rel="noopener">
+                    <span class="give-row__logo"><img src="assets/donate/jkopay.png" alt="街口支付" width="701" height="285" /></span>
+                    <span class="give-row__desc">捐款專區<small>需以街口 APP 完成捐款</small></span>
+                    <span class="give-row__go">前往捐款 →</span>
+                  </a>
+                </li>
+              </ul>
+              <p class="give-type__note">若你希望每月定期捐款，建議改由「定期定額」任一管道設定，即可依你的意願每月自動扣款。</p>
+            </div>
           </div>
           <p class="channel-note">
             若需使用銀行匯款或其他方式，歡迎<a href="#contact">與我們聯絡</a>，我們將提供相關資訊。<br />
